@@ -10,12 +10,24 @@ function App() {
     setResult("");
   }
 
-  function addInput(str) {
-    setResult(result + str);
+  function addInput(symbol) {
+    let specials = {
+      ".": 0,
+      "/": 0,
+      "+": 0,
+      "*": 0,
+      "-": 0
+    }
+    if (symbol in specials && result[result.length() - 1] in specials) {
+      setResult(result[result.length() - 1] = symbol);
+    }
+    setResult(result + symbol);
   }
 
   function handleEqual() {
-    setResult(math.evaluate(result));
+    if (result != "") {
+      setResult(math.evaluate(result));
+    }
   }
 
   return (
@@ -24,7 +36,7 @@ function App() {
         <p>{result}</p>
         <div className="calc-buttons">
           <button className="calc-button is-clear" onClick = {handleClear}>C</button>
-          <button className="calc-button" onClick = {() => addInput("%")}>&divide;</button>
+          <button className="calc-button" onClick = {() => addInput("/")}>&divide;</button>
           <button className="calc-button" onClick = {() => addInput("7")}>7</button>
           <button className="calc-button" onClick = {() => addInput("8")}>8</button>
           <button className="calc-button" onClick = {() => addInput("9")}>9</button>
