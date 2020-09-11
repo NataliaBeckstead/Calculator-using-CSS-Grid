@@ -18,7 +18,15 @@ function App() {
       "*": 0,
       "-": 0
     }
-    
+    if (symbol === "." && result.length > 1){
+      for (var i = result.length - 1; i > 0; i--) {
+        if (result[i] === ".") {
+          return false;
+        } else if (result[i] in specials) {
+          setResult(result + symbol);
+        }
+      }
+    }
     if (symbol in specials && result[result.length - 1] in specials) {
       let newRes = result.substr(0, result.length - 1);
       setResult(newRes + symbol);
@@ -28,8 +36,20 @@ function App() {
   }
 
   function handleEqual() {
+    let specials = {
+      ".": 0,
+      "/": 0,
+      "+": 0,
+      "*": 0,
+      "-": 0
+    }
+
     if (result !== "") {
-      setResult(math.evaluate(result));
+      if (result[result.length - 1] in specials) {
+        setResult(math.evaluate(result.substr(0, result.length - 1)));
+      } else {
+        setResult(math.evaluate(result));
+      }
     }
   }
 
