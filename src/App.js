@@ -18,14 +18,17 @@ function App() {
       "*": 0,
       "-": 0
     }
-    if (symbol in specials && result[result.length() - 1] in specials) {
-      setResult(result[result.length() - 1] = symbol);
+    
+    if (symbol in specials && result[result.length - 1] in specials) {
+      let newRes = result.substr(0, result.length - 1);
+      setResult(newRes + symbol);
+    } else {
+      setResult(result + symbol);
     }
-    setResult(result + symbol);
   }
 
   function handleEqual() {
-    if (result != "") {
+    if (result !== "") {
       setResult(math.evaluate(result));
     }
   }
